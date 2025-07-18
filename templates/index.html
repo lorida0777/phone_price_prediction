@@ -3,125 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Price Predictor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Smartphone Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
-        <h1 class="text-2xl font-bold mb-6 text-center">Phone Price Predictor</h1>
-        
-        <form method="POST" class="space-y-4">
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Brand</label>
-                    <input type="text" name="brand" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Model</label>
-                    <input type="text" name="model" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Name</label>
-                    <input type="text" name="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Battery (mAh)</label>
-                    <input type="number" name="battery" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Screen Size (inches)</label>
-                    <input type="number" step="0.1" name="screen_size" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Resolution X</label>
-                    <input type="number" name="resolution_x" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Resolution Y</label>
-                    <input type="number" name="resolution_y" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Processor Cores</label>
-                    <input type="number" name="processor" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">RAM (GB)</label>
-                    <input type="number" step="0.1" name="ram" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Storage (GB)</label>
-                    <input type="number" name="storage" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Rear Camera (MP)</play
-                    <input type="number" step="0.1" name="rear_camera" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Front Camera (MP)</label>
-                    <input type="number" step="0.1" name="front_camera" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Operating System</label>
-                    <select name="os" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Android">Android</option>
-                        <option value="iOS">iOS</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Number of SIMs</label>
-                    <input type="number" name="sims" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Touchscreen</label>
-                    <select name="touchscreen" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Wi-Fi</label>
-                    <select name="wifi" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Bluetooth</label>
-                    <select name="bluetooth" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">GPS</label>
-                    <select name="gps" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">3G</label>
-                    <select name="3g" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">4G/LTE</label>
-                    <select name="4g" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Smartphone Price Prediction</h1>
+        <form action="/predict" method="POST" class="p-4 shadow rounded bg-light">
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand</label>
+                <select name="brand" id="brand" class="form-select" required>
+                    {% for brand in brands %}
+                        <option value="{{ brand }}">{{ brand }}</option>
+                    {% endfor %}
+                </select>
             </div>
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Predict Price</button>
+            <div class="mb-3">
+                <label for="battery" class="form-label">Battery Capacity (mAh)</label>
+                <input type="number" name="battery" id="battery" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="screen_size" class="form-label">Screen Size (inches)</label>
+                <input type="number" step="0.1" name="screen_size" id="screen_size" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="processor" class="form-label">Processor</label>
+                <select name="processor" id="processor" class="form-select" required>
+                    {% for proc in processors %}
+                        <option value="{{ proc }}">{{ proc }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ram" class="form-label">RAM (GB)</label>
+                <input type="number" step="0.1" name="ram" id="ram" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="storage" class="form-label">Internal Storage (GB)</label>
+                <input type="number" name="storage" id="storage" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="rear_camera" class="form-label">Rear Camera (MP)</label>
+                <input type="number" step="0.1" name="rear_camera" id="rear_camera" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="front_camera" class="form-label">Front Camera (MP)</label>
+                <input type="number" step="0.1" name="front_camera" id="front_camera" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Predict Price</button>
         </form>
-
-        {% if prediction %}
-        <div class="mt-6 p-4 bg-green-100 rounded-md text-center">
-            <p class="text-lg font-semibold">{{ prediction }}</p>
-        </div>
-        {% endif %}
     </div>
 </body>
 </html>
