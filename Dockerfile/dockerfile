@@ -7,9 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Train model before running the app
-RUN python train_model.py
-
 EXPOSE 5000
 
 CMD ["python", "app.py"]
