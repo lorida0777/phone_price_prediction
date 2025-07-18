@@ -1,47 +1,68 @@
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 import joblib
-import os
 
-# Create models directory if it doesn't exist
-if not os.path.exists('models'):
-    os.makedirs('models')
-
-# Load and preprocess data
+# Loading the dataset
 df = pd.read_csv('ndtv_data_final.csv')
 
-# Convert categorical variables to codes
-categorical_columns = ['Name', 'Brand', 'Model', 'Touchscreen', 'Operating system', 
-                     'Wi-Fi', 'Bluetooth', 'GPS', '3G', '4G/ LTE']
-for col in categorical_columns:
-    df[col] = df[col].astype('category').cat.codes
-
-# Prepare features and target
-X = df.drop(['Price', 'Unnamed: 0'], axis=1)
+# Cleaning data: Handle missing values and select relevant features
+df = df.dropna()
+features = ['Brand', 'Battery capacity (mAh)', 'Screen size (inches)', 'Processor', 
+            'RAM (MB)', 'Internal storage (GB)', 'Rear camera', 'Front camera']
+X = df[features]
 y = df['Price']
 
-# Split data
+# Encoding categorical variables
+label_encoder = LabelEncoder()
+X['Brand'] = label_encoder.fit_transform(X['Brand'])
+X['Processor'] = label_encoder.fit_transform(X['Processor'])
+
+# Normalizing numerical features
+scaler = StandardScaler()
+numerical_features = ['Battery capacity (mAh)', 'Screen size (inches)', 'RAM (MB)', 
+                      'Internal storage (GB)', 'Rear camera', 'Front camera']
+X[numerical_features] = scaler.fit_transform(X[numerical_features])
+
+# Saving the encoder and scaler
+joblib.dump(label_encoder, 'label_encoder.pkl')
+joblib.dump(scaler, 'scaler.pkl')
+
+# Splitting the dataset
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Scale numerical features
-scaler = StandardScaler()
-numerical_columns = ['Battery capacity (mAh)', 'Screen size (inches)', 'Resolution x', 
-                    'Resolution y', 'Processor', 'RAM (MB)', 'Internal storage (GB)', 
-                    'Rear camera', 'Front camera']
-X_train[numerical_columns] = scaler.fit_transform(X_train[numerical_columns])
-X_test[numerical_columns] = scaler.transform(X_test[numerical_columns])
+# Defining hyperparameter grid
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [10, 20, 30, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4],
+    'max_features': ['sqrt', 'log2', None]
+}
 
-# Train model
-model = RandomForestRegressor(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+# Initializing the model
+rf = RandomForestRegressor(random_state=42)
 
-# Save model and scaler
-joblib.dump(model, 'models/price_predictor_model.pkl')
-joblib.dump(scaler, 'models/scaler.pkl')
+# Performing Grid Search with 5-fold cross-validation
+grid_search = GridSearchCV(estimator=rf, param_grid=param_grid, cv=5, scoring='r2', n_jobs=-1)
+grid_search.fit(X_train, y_train)
 
-# Print model performance
-print(f"Training score: {model.score(X_train, y_train):.2f}")
-print(f"Test score: {model.score(X_test, y_test):.2f}")
+# Getting the best model
+best_model = grid_search.best_estimator_
+
+# Saving the best model
+joblib.dump(best_model, 'phone_price_model.pkl')
+
+# Evaluating the best model
+train_score = best_model.score(X_train, y_train)
+test_score = best_model.score(X_test, y_test)
+print(f"Best Parameters: {grid_search.best_params_}")
+print(f"Training R^2 Score: {train_score:.4f}")
+print(f"Test R^2 Score: {test_score:.4f}")
+
+# Feature importance
+feature_importance = pd.Series(best_model.feature_importances_, index=features)
+print("\nFeature Importance:")
+print(feature_importance.sort_values(ascending=False))
