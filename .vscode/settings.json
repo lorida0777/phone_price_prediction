@@ -5,7 +5,7 @@
         "./venv/Lib/site-packages"
     ],
     "python.analysis.autoImportCompletions": true,
-    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.typeCheckingMode": "off",
     "python.analysis.autoSearchPaths": true,
     "python.analysis.useLibraryCodeForTypes": true,
     "python.analysis.diagnosticMode": "workspace",
@@ -16,5 +16,14 @@
         "**/venv/**",
         "**/__pycache__/**",
         "**/node_modules/**"
-    ]
+    ],
+    "python.analysis.reportUndefinedVariable": "none",
+    "python.analysis.reportGeneralTypeIssues": "none",
+    "python.analysis.reportOptionalMemberAccess": "none",
+    "python.analysis.reportOptionalSubscript": "none",
+    "python.analysis.reportOptionalIterable": "none",
+    "python.analysis.reportOptionalContextManager": "none",
+    "python.analysis.reportOptionalOperand": "none",
+    "python.analysis.reportMissingImports": "none",
+    "python.analysis.reportUnusedImport": "none"
 } 

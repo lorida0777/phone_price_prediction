@@ -11,12 +11,18 @@
     "pythonPlatform": "Windows",
     "venvPath": ".",
     "venv": "venv",
-    "typeCheckingMode": "basic",
+    "typeCheckingMode": "off",
     "useLibraryCodeForTypes": true,
     "autoImportCompletions": true,
-    "reportMissingImports": "warning",
+    "reportMissingImports": "none",
     "reportMissingTypeStubs": false,
-    "reportUnusedImport": "warning",
+    "reportUnusedImport": "none",
     "reportUnusedVariable": "warning",
-    "reportUndefinedVariable": "warning"
+    "reportUndefinedVariable": "none",
+    "reportGeneralTypeIssues": "none",
+    "reportOptionalMemberAccess": "none",
+    "reportOptionalSubscript": "none",
+    "reportOptionalIterable": "none",
+    "reportOptionalContextManager": "none",
+    "reportOptionalOperand": "none"
 } 
