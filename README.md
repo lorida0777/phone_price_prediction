@@ -1,152 +1,100 @@
+
 # 📱 Prédiction de Prix de Téléphones
 
-Application Streamlit pour prédire le prix d'un téléphone à partir de ses caractéristiques techniques.
+Bienvenue dans ce projet de **Machine Learning** déployé avec **Streamlit**.  
+Cette application permet de **prédire le prix estimé d'un smartphone** à partir de ses caractéristiques techniques.
+
+[🚀 **Accéder à l'application en ligne**](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)  
+[![Streamlit Badge](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)
 
 ---
 
-## 🚀 Lancer l'application
-# 📱 Prédiction de Prix de Téléphones
+## 🎯 Objectif
 
-Bienvenue dans cette application intelligente de prédiction de prix de smartphones !  
-Développée avec **Streamlit** et **scikit-learn**, cette app vous permet d’estimer le prix d’un téléphone à partir de ses spécifications techniques.
+Ce projet vise à fournir un outil interactif permettant de :
 
-🎯 **Objectif** : Fournir une estimation rapide et visuelle du prix d’un téléphone pour aider à la comparaison, à l’achat ou à l’évaluation marché.
-
----
-
-## 🌐 Démo en ligne
-
-👉 **[Accéder à l’application ici](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)**  
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)
+- Prédire le **prix approximatif** d’un téléphone selon ses spécifications
+- Visualiser les données sous forme de **graphiques dynamiques**
+- Exploiter un modèle de **machine learning** pré-entraîné
 
 ---
 
-## 🚀 Lancer l’application en local
+## 🖥️ Lancer l'application en local
 
-### 1. Cloner le dépôt
+### 🔧 Prérequis
+
+- Python 3.8+ recommandé
+- `pip` ou `conda` pour la gestion des packages
+
+### ⚙️ Installation
 
 ```bash
 git clone https://github.com/ton-utilisateur/phone_price_prediction.git
 cd phone_price_prediction
-```
-
-> Remplace `ton-utilisateur` par ton vrai nom d'utilisateur GitHub.
-
-### 2. Installer les dépendances
-
-```bash
 pip install -r requirements.txt
 ```
 
-### 3. Exécuter l’application
+### ▶️ Exécution
 
 ```bash
 streamlit run app_streamlit.py
 ```
 
-Ouvre ensuite ton navigateur sur : [http://localhost:8501](http://localhost:8501)
+Ouvrir ensuite le navigateur à l'adresse [http://localhost:8501](http://localhost:8501)
 
 ---
 
-## 📁 Contenu du projet
+## 📁 Fichiers du projet
 
 | Fichier | Description |
 |--------|-------------|
-| `app_streamlit.py` | Code principal de l'application Streamlit |
-| `ndtv_data_final.csv` | Jeu de données de référence |
-| `phone_price_model.pkl` | Modèle de prédiction sauvegardé |
-| `brand_encoder.pkl` | Encodeur des marques |
-| `processor_encoder.pkl` | Encodeur des processeurs |
-| `scaler.pkl` | Normalisateur (scaler) utilisé à l'entraînement |
-| `feature_names.pkl` | Liste des colonnes/features attendues |
-| `requirements.txt` | Liste des dépendances Python à installer |
+| `app_streamlit.py` | Script principal de l'application |
+| `ndtv_data_final.csv` | Dataset utilisé pour la prédiction |
+| `phone_price_model.pkl` | Modèle de régression pré-entraîné |
+| `brand_encoder.pkl` | Encodeur pour la marque |
+| `processor_encoder.pkl` | Encodeur pour le processeur |
+| `scaler.pkl` | Scaler pour la normalisation |
+| `feature_names.pkl` | Liste des variables utilisées |
+| `requirements.txt` | Dépendances Python nécessaires |
 
 ---
 
-## 🧠 Fonctionnement
+## 🧪 Utilisation de l'app
 
-1. L’utilisateur entre les caractéristiques du téléphone via la sidebar (RAM, écran, stockage, etc.).
-2. L’application encode et met à l’échelle les données d’entrée.
-3. Le modèle prédictif retourne le **prix estimé** du téléphone.
-4. Des visualisations comparent la saisie aux moyennes de marché.
+1. Renseignez les **caractéristiques techniques** du téléphone :
+   - Marque, Processeur, RAM, Stockage, Écran, Batterie, Caméra, etc.
+2. Cliquez sur le bouton **"Prédire le prix"**
+3. Le modèle prédit instantanément le **prix estimé**
 
----
-
-## 📝 Exemple d'utilisation
-
-- Sélectionnez la **marque** et le **processeur**
-- Entrez les valeurs : **batterie, écran, RAM, stockage, caméras**
-- Cliquez sur **"🚀 Prédire le Prix"**
-- Résultats, graphiques, comparaisons et recommandations s’affichent automatiquement
+Des **graphiques interactifs** s'affichent également pour illustrer les valeurs par rapport à la moyenne.
 
 ---
 
-## 💡 Conseils utiles
+## 📦 Bibliothèques principales
 
-- 📂 Placez tous les fichiers `.pkl` et `.csv` dans le **même dossier** que `app_streamlit.py`.
-- ⚠️ En cas d’erreurs, vérifiez les versions de `scikit-learn`, `numpy`, etc. dans `requirements.txt`.
+- `streamlit`
+- `pandas`, `numpy`
+- `scikit-learn`
+- `joblib`
+- `plotly`
 
 ---
 
-## 🤝 Contribuer
+## 🤝 Contributions
 
 Les contributions sont les bienvenues !  
-N'hésitez pas à ouvrir une **issue**, proposer une **pull request**, ou suggérer une amélioration.
+Merci de bien vouloir créer une *pull request* ou ouvrir une *issue* pour toute suggestion.
 
 ---
 
 ## 👨‍💻 Auteur
 
-Développé dans le cadre d’un projet Data Science.  
-📫 Contact : *ajoutez ici votre email ou votre profil LinkedIn*
+Développé dans le cadre d’un projet d’apprentissage en **Data Science**.  
+N’hésitez pas à me contacter pour toute collaboration ou remarque.
 
 ---
 
+## 📸 Aperçu
 
-1. **Installer les dépendances** :
 
-   ```bash
-   pip install -r requirements.txt
-   ```
 
-2. **Lancer l'application Streamlit** :
-
-   ```bash
-   streamlit run app_streamlit.py
-   ```
-
-3. **Ouvrir le navigateur** sur l'adresse indiquée (généralement http://localhost:8501)
-
----
-
-## 📂 Fichiers nécessaires
-
-- `app_streamlit.py` : Application principale
-- `ndtv_data_final.csv` : Dataset utilisé pour la prédiction
-- `phone_price_model.pkl` : Modèle de machine learning entraîné
-- `brand_encoder.pkl` : Encodeur pour la marque
-- `processor_encoder.pkl` : Encodeur pour le processeur
-- `scaler.pkl` : Scaler utilisé pour la normalisation
-- `feature_names.pkl` : Liste des features utilisées lors de l'entraînement
-- `requirements.txt` : Liste des dépendances Python
-
----
-
-## 📝 Exemple d'utilisation
-
-1. Remplir le formulaire avec les caractéristiques du téléphone (marque, processeur, batterie, écran, RAM, stockage).
-2. Cliquer sur "Prédire le prix".
-3. Le prix prédit s'affiche instantanément.
-
----
-
-## 💡 Conseils
-
-- Assurez-vous que tous les fichiers `.pkl` et le dataset `.csv` sont présents dans le même dossier que `app_streamlit.py`.
-- Si vous rencontrez des erreurs de version, vérifiez que les versions de scikit-learn, numpy, etc. sont compatibles (voir `requirements.txt`).
-
----
-
-## 🤝 Contribuer
-
-Les contributions sont les bienvenues !
