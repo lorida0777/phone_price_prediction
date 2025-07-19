@@ -95,6 +95,9 @@ N’hésitez pas à me contacter pour toute collaboration ou remarque.
 ---
 
 ## 📸 Aperçu
-![Aperçu de l'application](./screenshot.png)
+![Aperçu de l'application](screenshoot/s1.png)
+![Aperçu de l'application](screenshoot/s2.png)
+![Aperçu de l'application](screenshoot/s3.png)
+![Aperçu de l'application](screenshoot/s4.png)
 
 
