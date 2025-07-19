@@ -13,6 +13,7 @@ model = joblib.load('phone_price_model.pkl')
 brand_encoder = joblib.load('brand_encoder.pkl')
 processor_encoder = joblib.load('processor_encoder.pkl')
 scaler = joblib.load('scaler.pkl')
+feature_names = joblib.load('feature_names.pkl')
 
 # Getting unique brands and processors for dropdowns
 brands = sorted(df['Brand'].unique())
@@ -34,29 +35,42 @@ def predict():
     rear_camera = float(request.form['rear_camera'])
     front_camera = float(request.form['front_camera'])
 
-    # Preparing input data
+    # Creating engineered features
+    camera_total = rear_camera + front_camera
+    ram_gb = ram
+    ram_mb = ram * 1000
+    
+    # Calculate price per GB and MP for feature engineering
+    price_per_gb = df['Price'].mean() / df['Internal storage (GB)'].mean()
+    price_per_mp = df['Price'].mean() / (df['Rear camera'].mean() + df['Front camera'].mean())
+    screen_to_battery_ratio = screen_size / (battery / 1000)
+
+    # Preparing input data with all features
     input_data = pd.DataFrame({
         'Brand': [brand],
         'Battery capacity (mAh)': [battery],
         'Screen size (inches)': [screen_size],
         'Processor': [processor],
-        'RAM (MB)': [ram * 1000],  # Convert GB to MB
+        'RAM (MB)': [ram_mb],
         'Internal storage (GB)': [storage],
         'Rear camera': [rear_camera],
-        'Front camera': [front_camera]
+        'Front camera': [front_camera],
+        'Camera_Total': [camera_total],
+        'RAM_GB': [ram_gb],
+        'Price_per_GB': [price_per_gb],
+        'Price_per_MP': [price_per_mp],
+        'Screen_to_Battery_Ratio': [screen_to_battery_ratio]
     })
 
     # Encoding categorical variables
     input_data['Brand'] = brand_encoder.transform(input_data['Brand'])
     input_data['Processor'] = processor_encoder.transform(input_data['Processor'])
 
-    # Normalizing numerical features
-    numerical_features = ['Battery capacity (mAh)', 'Screen size (inches)', 'RAM (MB)', 
-                          'Internal storage (GB)', 'Rear camera', 'Front camera']
-    input_data[numerical_features] = scaler.transform(input_data[numerical_features])
+    # Scaling all features
+    input_scaled = scaler.transform(input_data)
 
     # Predicting price
-    predicted_price = model.predict(input_data)[0]
+    predicted_price = model.predict(input_scaled)[0]
 
     # Finding similar phones (based on storage and RAM)
     similar_phones = df[
