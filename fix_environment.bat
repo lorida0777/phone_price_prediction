@@ -1,6 +1,0 @@
-@echo off
-echo Activating virtual environment...
-call venv\Scripts\activate
-echo Running environment fix script...
-python fix_environment.py
-pause 
