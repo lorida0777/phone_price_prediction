@@ -16,9 +16,10 @@ X = df[features]
 y = df['Price']
 
 # Encoding categorical variables
-label_encoder = LabelEncoder()
-X['Brand'] = label_encoder.fit_transform(X['Brand'])
-X['Processor'] = label_encoder.fit_transform(X['Processor'])
+brand_encoder = LabelEncoder()
+processor_encoder = LabelEncoder()
+X['Brand'] = brand_encoder.fit_transform(X['Brand'])
+X['Processor'] = processor_encoder.fit_transform(X['Processor'])
 
 # Normalizing numerical features
 scaler = StandardScaler()
@@ -26,8 +27,9 @@ numerical_features = ['Battery capacity (mAh)', 'Screen size (inches)', 'RAM (MB
                       'Internal storage (GB)', 'Rear camera', 'Front camera']
 X[numerical_features] = scaler.fit_transform(X[numerical_features])
 
-# Saving the encoder and scaler
-joblib.dump(label_encoder, 'label_encoder.pkl')
+# Saving the encoders and scaler
+joblib.dump(brand_encoder, 'brand_encoder.pkl')
+joblib.dump(processor_encoder, 'processor_encoder.pkl')
 joblib.dump(scaler, 'scaler.pkl')
 
 # Splitting the dataset

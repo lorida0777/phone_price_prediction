@@ -7,10 +7,11 @@ import json
 
 app = Flask(__name__)
 
-# Loading the dataset, model, encoder, and scaler
+# Loading the dataset, model, encoders, and scaler
 df = pd.read_csv('ndtv_data_final.csv')
 model = joblib.load('phone_price_model.pkl')
-label_encoder = joblib.load('label_encoder.pkl')
+brand_encoder = joblib.load('brand_encoder.pkl')
+processor_encoder = joblib.load('processor_encoder.pkl')
 scaler = joblib.load('scaler.pkl')
 
 # Getting unique brands and processors for dropdowns
@@ -46,8 +47,8 @@ def predict():
     })
 
     # Encoding categorical variables
-    input_data['Brand'] = label_encoder.transform(input_data['Brand'])
-    input_data['Processor'] = label_encoder.transform(input_data['Processor'])
+    input_data['Brand'] = brand_encoder.transform(input_data['Brand'])
+    input_data['Processor'] = processor_encoder.transform(input_data['Processor'])
 
     # Normalizing numerical features
     numerical_features = ['Battery capacity (mAh)', 'Screen size (inches)', 'RAM (MB)', 
