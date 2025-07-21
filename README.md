@@ -6,6 +6,10 @@ Application Streamlit pour prédire le prix d'un téléphone à partir de ses ca
 
 ## 🚀 Lancer l'application
 
+[🚀 **Accéder à l'application en ligne**](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)  
+[![Streamlit Badge](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://phonepriceprediction-a9uxwcr48ebeakdavgfrng.streamlit.app/)
+
+
 1. **Installer les dépendances** :
 
    ```bash
