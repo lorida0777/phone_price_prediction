@@ -103,24 +103,38 @@ if st.sidebar.button("🚀 Prédire le Prix", type="primary"):
         # Normalisation
         input_scaled = scaler.transform(input_data)
         
-        # Prédiction
+        # Prédiction brute
         predicted_price = model.predict(input_scaled)[0]
-        
-        # Prix moyen des téléphones similaires (déplacé ici pour l'ajustement)
+
+        # Calcul du prix moyen des téléphones similaires
         similar_phones = df[
             (df['Internal storage (GB)'].between(storage * 0.8, storage * 1.2)) &
             (df['RAM (MB)'].between(ram * 1000 * 0.8, ram * 1000 * 1.2))
         ]
         avg_price = similar_phones['Price'].mean() if not similar_phones.empty else predicted_price
-        
-        # --- OPTIMISATION ---
-        # Si le prix prédit est >10% supérieur à la moyenne et qu'il y a assez de téléphones similaires, on ajuste
-        if (predicted_price > avg_price * 1.1) and (len(similar_phones) >= 5):
-            adjusted_price = (predicted_price + avg_price) / 2
-            price_note = "(ajusté pour cohérence avec la moyenne)"
+
+        # --- OPTIMISATION RENFORCÉE ---
+        if len(similar_phones) >= 5:
+            relative_gap = abs(predicted_price - avg_price) / avg_price
+            # Pondération dynamique
+            if relative_gap > 0.3:
+                model_weight = 0.3
+            elif relative_gap > 0.15:
+                model_weight = 0.5
+            else:
+                model_weight = 0.8
+            adjusted_price = model_weight * predicted_price + (1 - model_weight) * avg_price
+
+            # Limite stricte : jamais plus de 10% au-dessus de la moyenne
+            max_allowed = avg_price * 1.10
+            if adjusted_price > max_allowed:
+                adjusted_price = max_allowed
+                price_note = "(forcé à +10% max de la moyenne)"
+            else:
+                price_note = f"(ajusté dynamiquement, poids modèle: {model_weight:.2f})"
         else:
             adjusted_price = predicted_price
-            price_note = ""
+            price_note = "(pas assez de téléphones similaires pour ajustement)"
         
         # Affichage des résultats
         st.success("✅ Prédiction effectuée avec succès!")
