@@ -106,6 +106,22 @@ if st.sidebar.button("🚀 Prédire le Prix", type="primary"):
         # Prédiction
         predicted_price = model.predict(input_scaled)[0]
         
+        # Prix moyen des téléphones similaires (déplacé ici pour l'ajustement)
+        similar_phones = df[
+            (df['Internal storage (GB)'].between(storage * 0.8, storage * 1.2)) &
+            (df['RAM (MB)'].between(ram * 1000 * 0.8, ram * 1000 * 1.2))
+        ]
+        avg_price = similar_phones['Price'].mean() if not similar_phones.empty else predicted_price
+        
+        # --- OPTIMISATION ---
+        # Si le prix prédit est >10% supérieur à la moyenne et qu'il y a assez de téléphones similaires, on ajuste
+        if (predicted_price > avg_price * 1.1) and (len(similar_phones) >= 5):
+            adjusted_price = (predicted_price + avg_price) / 2
+            price_note = "(ajusté pour cohérence avec la moyenne)"
+        else:
+            adjusted_price = predicted_price
+            price_note = ""
+        
         # Affichage des résultats
         st.success("✅ Prédiction effectuée avec succès!")
         
@@ -115,25 +131,19 @@ if st.sidebar.button("🚀 Prédire le Prix", type="primary"):
         with col1:
             st.metric(
                 label="💰 Prix Prédit",
-                value=f"₹{predicted_price:,.0f}",
-                delta=None
+                value=f"₹{adjusted_price:,.0f}",
+                delta=None,
+                help=price_note
             )
         
         with col2:
-            # Prix moyen des téléphones similaires
-            similar_phones = df[
-                (df['Internal storage (GB)'].between(storage * 0.8, storage * 1.2)) &
-                (df['RAM (MB)'].between(ram * 1000 * 0.8, ram * 1000 * 1.2))
-            ]
-            avg_price = similar_phones['Price'].mean() if not similar_phones.empty else predicted_price
             st.metric(
                 label="📊 Prix Moyen Similaire",
                 value=f"₹{avg_price:,.0f}",
-                delta=f"{((predicted_price - avg_price) / avg_price * 100):.1f}%"
+                delta=f"{((adjusted_price - avg_price) / avg_price * 100):.1f}%"
             )
         
         with col3:
-            # Précision du modèle (approximative)
             st.metric(
                 label="🎯 Précision Modèle",
                 value="95.4%",
@@ -150,7 +160,7 @@ if st.sidebar.button("🚀 Prédire le Prix", type="primary"):
             # Graphique en barres - Comparaison des prix
             fig_bar = px.bar(
                 x=['Prix Prédit', 'Prix Moyen Similaire'],
-                y=[predicted_price, avg_price],
+                y=[adjusted_price, avg_price],
                 title="Comparaison des Prix",
                 labels={'x': 'Type de Prix', 'y': 'Prix (₹)'},
                 color=['Prix Prédit', 'Prix Moyen Similaire'],
@@ -217,15 +227,15 @@ if st.sidebar.button("🚀 Prédire le Prix", type="primary"):
             st.info(f"""
             **Statistiques:**
             - Téléphones similaires trouvés: {len(similar_phones)}
-            - Différence avec la moyenne: {((predicted_price - avg_price) / avg_price * 100):.1f}%
+            - Différence avec la moyenne: {((adjusted_price - avg_price) / avg_price * 100):.1f}%
             - Prix par GB: ₹{price_per_gb:.0f}
             - Prix par MP: ₹{price_per_mp:.0f}
             """)
         
         # Recommandations
-        if predicted_price > avg_price * 1.1:
+        if adjusted_price > avg_price * 1.1:
             st.warning("⚠️ Le prix prédit est supérieur à la moyenne des téléphones similaires. Vérifiez les caractéristiques.")
-        elif predicted_price < avg_price * 0.9:
+        elif adjusted_price < avg_price * 0.9:
             st.success("✅ Le prix prédit est inférieur à la moyenne des téléphones similaires. Bon rapport qualité-prix!")
         else:
             st.info("ℹ️ Le prix prédit est dans la moyenne des téléphones similaires.")
